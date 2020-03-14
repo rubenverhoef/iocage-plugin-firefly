@@ -11,17 +11,6 @@ then
     LATEST=$(curl -s 'https://version.firefly-iii.org/index.json' | jq -r .firefly_iii.alpha.version)
 fi
 
-# Check which is the latest csv-importer version
-LATESTCSV=$(curl -s 'https://version.firefly-iii.org/index.json' | jq -r .csv.stable.version)
-if [ $LATESTCSV == null ]
-then
-    LATESTCSV=$(curl -s 'https://version.firefly-iii.org/index.json' | jq -r .csv.beta.version)
-fi
-if [ $LATESTCSV == null ]
-then
-    LATESTCSV=$(curl -s 'https://version.firefly-iii.org/index.json' | jq -r .csv.alpha.version)
-fi
-
 # Config php-fpm
 sed -i '' -e 's/listen = 127.0.0.1:9000/listen = \/var\/run\/php-fpm.sock/g' /usr/local/etc/php-fpm.d/www.conf
 sed -i '' -e 's/;listen.owner = www/listen.owner = www/g' /usr/local/etc/php-fpm.d/www.conf
@@ -33,7 +22,6 @@ curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
 
 # Install firefly-iii and csv-importer
 cd /usr/local/www && composer create-project grumpydictator/firefly-iii --no-dev --prefer-dist firefly-iii $LATEST
-cd /usr/local/www && composer create-project firefly-iii/csv-importer --no-dev --prefer-dist csv-importer $LATESTCSV
 
 # Configure firefly-iii
 sed -i '' -e 's/TRUSTED_PROXIES=.*/TRUSTED_PROXIES=**/g' /usr/local/www/firefly-iii/.env
