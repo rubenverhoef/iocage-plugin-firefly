@@ -1,0 +1,8 @@
+#!/bin/sh
+
+service php-fpm start
+service nginx start
+
+cd /usr/local/www/firefly-iii && php artisan migrate:refresh --seed
+cd /usr/local/www/firefly-iii && php artisan firefly-iii:upgrade-database
+cd /usr/local/www/firefly-iii && php artisan passport:install

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+case $1 in
+    dbport) echo `awk -F'=' '/^DB_PORT/ { print $2 }' /usr/local/www/firefly-iii/.env`
+          ;;
+    *) echo "Unknown option">&2
+       exit 1v
+       ;;
+esac

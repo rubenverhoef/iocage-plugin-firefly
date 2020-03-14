@@ -1,0 +1,16 @@
+{
+    "servicerestart":"/usr/local/bin/start",
+    "serviceget": "/usr/local/bin/getsetting",
+    "serviceset": "/usr/local/bin/setsetting",
+    "options":
+    {
+        "dbport": {
+            "type": "int",
+            "name": "Database Port",
+            "description": "Port for connection to the DB",
+            "range": "1024-32000",
+            "default": "3306",
+            "requirerestart": true
+        }
+    }
+}
