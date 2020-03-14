@@ -1,18 +1,20 @@
 #!/bin/sh
 
-give_message()
+COMMAND=$(echo $1 | awk -F"=" '{print $1}')
+SETTING=$(echo $2 | awk -F"=" '{print $1}')
+VALUE=$(echo $2 | awk -F"=" '{print $2}')
+
+check_msg()
 {
     if [ $? -eq 0 ] ; then
-        echo "Config changed"
+        echo "Setting updated successfully"
     else
-        echo "Error updating config">2 ; exit 1
+        echo "Error updating setting">2 ; exit 1
     fi
 }
 
-case $1 in
-    port) sed -i '' -e 's/DB_PORT=.*/DB_PORT=$2/g' /usr/local/www/firefly-iii/.env
-          give_message
-          ;;
-    *) echo "Unknown option">&2 ; exit 1
-            ;;
+case $COMMAND in
+    firefly-iii)    sed -i '' -e 's/'$SETTING'=.*/'$SETTING'='$VALUE'/g' /usr/local/www/firefly-iii/.env
+                    check_msg
+                    ;;
 esac

@@ -1,9 +1,8 @@
 #!/bin/sh
 
-case $1 in
-    dbport) echo `awk -F'=' '/^DB_PORT/ { print $2 }' /usr/local/www/firefly-iii/.env`
-          ;;
-    *) echo "Unknown option">&2
-       exit 1v
-       ;;
+COMMAND=$(echo $1 | awk -F"=" '{print $1}')
+SETTING=$(echo $1 | awk -F"=" '{print $2}')
+
+case $COMMAND in
+    firefly-iii) echo `awk -F'=' '/^'$SETTING'/ { print $2 }' /usr/local/www/firefly-iii/.env`;;
 esac
