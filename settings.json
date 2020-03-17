@@ -8,7 +8,7 @@
             "type": "string",
             "name": "set/get any firefly-iii setting",
             "description": "usage: 'firefly-iii=settingname=value'",
-            "requirerestart": false
+            "requirerestart": true
         }
     }
 }
