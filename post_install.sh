@@ -30,8 +30,10 @@ sed -i '' -e 's/TRUSTED_PROXIES=.*/TRUSTED_PROXIES=**/g' /usr/local/www/firefly-
 chown -R www:www /usr/local/www
 chmod -R 775 /usr/local/www/firefly-iii/storage
 
-# Enable nginx and php_fpm service
+# Enable and start nginx and php_fpm service
 sysrc 'nginx_enable=YES' 'php_fpm_enable=YES'
+service php-fpm start
+service nginx start
 
 # cron job for Firefly III
 crontab -u www -l > mycron
